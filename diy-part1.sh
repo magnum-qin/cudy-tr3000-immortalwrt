@@ -15,3 +15,8 @@ echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main' >
 
 # Add OpenClash
 echo 'src-git openclash https://github.com/vernesong/OpenClash.git;master' >>feeds.conf.default
+
+# Add Temperature status & wrtbwmon
+echo 'src-git tempstatus https://github.com/gSpotx2f/luci-app-temp-status.git' >>feeds.conf.default
+echo 'src-git wrtbwmon https://github.com/brvphoenix/luci-app-wrtbwmon.git' >>feeds.conf.default
+echo 'src-git wrtbwmon_pkg https://github.com/brvphoenix/wrtbwmon.git' >>feeds.conf.default
