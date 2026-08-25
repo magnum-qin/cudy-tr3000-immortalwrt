@@ -23,5 +23,10 @@ exit 0
 EOF
 chmod +x package/base-files/files/etc/uci-defaults/99-custom-ttyd
 
-# 额外针对编译期 ttyd.config 模板进行替换做双重保障
-find feeds/ package/ -name "ttyd.config" -exec sed -i "s?/bin/login?/bin/login -f root?g" {} + 2>/dev/null || true
+# 6. 直接拉取独立第三方插件到 package 目录（绝对不会产生 feed 冲突）
+git clone --depth=1 https://github.com/vernesong/OpenClash.git package/luci-app-openclash
+git clone --depth=1 https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-temp-status
+git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
+git clone --depth=1 https://github.com/brvphoenix/luci-app-wrtbwmon.git package/luci-app-wrtbwmon
+git clone --depth=1 https://github.com/brvphoenix/wrtbwmon.git package/wrtbwmon

@@ -1,22 +1,3 @@
 #!/bin/bash
 # Description: OpenWrt DIY script part 1 (Before Update feeds)
-
-# Add Argon Theme
-echo 'src-git argon https://github.com/jerrykuku/luci-theme-argon.git' >>feeds.conf.default
-echo 'src-git argonconfig https://github.com/jerrykuku/luci-app-argon-config.git' >>feeds.conf.default
-
-# Add Design Theme
-echo 'src-git design https://github.com/gngpp/luci-theme-design.git' >>feeds.conf.default
-echo 'src-git designconfig https://github.com/gngpp/luci-app-design-config.git' >>feeds.conf.default
-
-# Add Passwall
-echo 'src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main' >>feeds.conf.default
-echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main' >>feeds.conf.default
-
-# Add OpenClash
-echo 'src-git openclash https://github.com/vernesong/OpenClash.git;master' >>feeds.conf.default
-
-# Add Temperature status & wrtbwmon
-echo 'src-git tempstatus https://github.com/gSpotx2f/luci-app-temp-status.git' >>feeds.conf.default
-echo 'src-git wrtbwmon https://github.com/brvphoenix/luci-app-wrtbwmon.git' >>feeds.conf.default
-echo 'src-git wrtbwmon_pkg https://github.com/brvphoenix/wrtbwmon.git' >>feeds.conf.default
+# ImmortalWrt has native support for most packages. Keep feeds clean to prevent index errors.
