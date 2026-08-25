@@ -13,3 +13,15 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 # 4. Enable WED (Wireless Ethernet Dispatch)
 mkdir -p package/base-files/files/etc/modules.d
 echo "options mt7915e wed_enable=Y" > package/base-files/files/etc/modules.d/mt7915e
+
+# 5. Enable passwordless login for TTYD (免密直接进入 root 终端)
+mkdir -p package/base-files/files/etc/uci-defaults
+cat << 'EOF' > package/base-files/files/etc/uci-defaults/99-custom-ttyd
+uci set ttyd.@ttyd[0].command='/bin/login -f root'
+uci commit ttyd
+exit 0
+EOF
+chmod +x package/base-files/files/etc/uci-defaults/99-custom-ttyd
+
+# 额外针对编译期 ttyd.config 模板进行替换做双重保障
+find feeds/ package/ -name "ttyd.config" -exec sed -i "s?/bin/login?/bin/login -f root?g" {} + 2>/dev/null || true

@@ -5,6 +5,10 @@
 echo 'src-git argon https://github.com/jerrykuku/luci-theme-argon.git' >>feeds.conf.default
 echo 'src-git argonconfig https://github.com/jerrykuku/luci-app-argon-config.git' >>feeds.conf.default
 
+# Add Design Theme
+echo 'src-git design https://github.com/gngpp/luci-theme-design.git' >>feeds.conf.default
+echo 'src-git designconfig https://github.com/gngpp/luci-app-design-config.git' >>feeds.conf.default
+
 # Add Passwall
 echo 'src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main' >>feeds.conf.default
 echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main' >>feeds.conf.default
