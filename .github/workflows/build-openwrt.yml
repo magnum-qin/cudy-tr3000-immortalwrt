@@ -78,7 +78,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
+        make -j$(nproc) || make -j$(nproc) V=s || make -j1 V=s
         echo "status=success" >> $GITHUB_OUTPUT
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
@@ -97,7 +97,7 @@ jobs:
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v2
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: steps.organize.outputs.success == 'true' || steps.organize.outputs.status == 'success'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -107,6 +107,7 @@ jobs:
           🔥 **Cudy TR3000 自定义 ImmortalWrt 固件**
           - 默认后台管理 IP: `192.168.10.1`
           - 默认用户名: `root` / 默认密码: 空 (或 `password`)
-          - 集成插件: OpenClash, Passwall, Turbo ACC 网络加速 (HWNAT/BBR/FullCone)
-          - 硬件特性: 已注入 WED (Wireless Ethernet Dispatch) 硬件无线直传加速
-          - 默认主题: 高颜值 Argon 主题 (`luci-theme-argon`)
+          - 集成插件: OpenClash, Passwall, Turbo ACC, Netdata, wrtbwmon, temp-status
+          - 硬件特性: 已开启 WED 硬件无线直传与 HWNAT 硬件流控加速
+          - 默认主题: 高颜值 Argon 主题 (`luci-theme-argon`)，附带 Design 主题可随时切换
+          - 终端支持: 免密直接进入 TTYD 网页终端
