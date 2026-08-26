@@ -4,6 +4,11 @@ on:
   repository_dispatch:
   workflow_dispatch:
 
+# 明确赋予 GitHub Token 创建 Release 和写入文件的完整权限
+permissions:
+  contents: write
+  actions: read
+
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: master
@@ -95,9 +100,16 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
+    - name: Upload firmware to artifact (双重保障)
+      uses: actions/upload-artifact@v4
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: Cudy-TR3000-Firmware${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}/*
+
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v2
-      if: steps.organize.outputs.success == 'true' || steps.organize.outputs.status == 'success'
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
