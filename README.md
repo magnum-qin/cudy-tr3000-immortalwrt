@@ -10,7 +10,7 @@
   * 开启 **WED (Wireless Ethernet Dispatch)** 硬件无线调度直传
   * 开启 **BBR 拥塞控制** 与 **FullCone NAT**
 * **集成插件**：
-  * **OpenClash**
+  * **HomeProxy (原生 Sing-box 极速透明代理)**
   * **Passwall**
   * **TTYD 终端**、UPnP、定时重启等实用工具
 * **内存优化**：开启 **zRAM Swap 内存压缩**，保障 512MB RAM 在高并发代理下稳定不崩溃。

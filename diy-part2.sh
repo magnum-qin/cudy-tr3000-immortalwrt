@@ -28,7 +28,6 @@ EOF
 chmod +x package/base-files/files/etc/uci-defaults/99-custom-settings
 
 # 6. 直接拉取独立第三方插件到 package 目录
-git clone --depth=1 https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 git clone --depth=1 https://github.com/gSpotx2f/luci-app-temp-status.git package/luci-app-temp-status
 git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
