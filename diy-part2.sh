@@ -37,3 +37,10 @@ git clone --depth=1 https://github.com/brvphoenix/wrtbwmon.git package/wrtbwmon
 # 7. 修复 apk 包管理器对于版本号中多连字符的严格校验报错
 find package/luci-theme-design package/luci-app-design-config -name Makefile -exec sed -i 's/5.8.0-20240106/5.8.0/g' {} + 2>/dev/null || true
 find package/ -name Makefile -exec sed -i 's/\([0-9]\+\)-\([0-9]\{8\}\)/\1.\2/g' {} + 2>/dev/null || true
+
+# 8. 彻底移除 NaiveProxy 与 gn 编译依赖，防止因宿主机编译器缺少 C++23 支持而报错，并节省2小时以上无谓编译时间
+sed -i 's/default y if aarch64||arm||x86_64/default n/g' feeds/luci/applications/luci-app-passwall/Makefile 2>/dev/null || true
+sed -i 's/default y if aarch64||arm||i386||x86_64/default n/g' feeds/luci/applications/luci-app-passwall/Makefile 2>/dev/null || true
+rm -rf feeds/packages/net/naiveproxy package/feeds/packages/naiveproxy 2>/dev/null || true
+rm -rf feeds/packages/devel/gn package/feeds/packages/gn 2>/dev/null || true
+
