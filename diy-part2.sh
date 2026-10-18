@@ -38,9 +38,19 @@ git clone --depth=1 https://github.com/brvphoenix/wrtbwmon.git package/wrtbwmon
 find package/luci-theme-design package/luci-app-design-config -name Makefile -exec sed -i 's/5.8.0-20240106/5.8.0/g' {} + 2>/dev/null || true
 find package/ -name Makefile -exec sed -i 's/\([0-9]\+\)-\([0-9]\{8\}\)/\1.\2/g' {} + 2>/dev/null || true
 
-# 8. 彻底移除 NaiveProxy 与 gn 编译依赖，防止因宿主机编译器缺少 C++23 支持而报错，并节省2小时以上无谓编译时间
+# 8. 彻底移除 NaiveProxy / libcronet / gn 编译依赖（避免拉取庞大的 Chromium 引擎与 C++23 编译报错，节省2小时以上构建时间）
+# 8.1 禁用 PassWall 中的 NaiveProxy
 sed -i 's/default y if aarch64||arm||x86_64/default n/g' feeds/luci/applications/luci-app-passwall/Makefile 2>/dev/null || true
 sed -i 's/default y if aarch64||arm||i386||x86_64/default n/g' feeds/luci/applications/luci-app-passwall/Makefile 2>/dev/null || true
+
+# 8.2 禁用 Sing-box 对 NaiveProxy/libcronet 的强制依赖，保留纯 Go 核心（支持 VLESS-Reality, Hysteria 2, Trojan 等所有现代协议）
+sed -i 's/def_bool y/def_bool n/g' feeds/packages/net/sing-box/Makefile 2>/dev/null || true
+sed -i 's/+SING_BOX_BUILD_NAIVE_OUTBOUND:libcronet//g' feeds/packages/net/sing-box/Makefile 2>/dev/null || true
+sed -i 's/+SING_BOX_TINY_BUILD_NAIVE_OUTBOUND:libcronet//g' feeds/packages/net/sing-box/Makefile 2>/dev/null || true
+
+# 8.3 清理无用的 naiveproxy、libcronet、gn 源码包避免被任何规则意外索引
 rm -rf feeds/packages/net/naiveproxy package/feeds/packages/naiveproxy 2>/dev/null || true
+rm -rf feeds/packages/libs/libcronet package/feeds/packages/libcronet 2>/dev/null || true
 rm -rf feeds/packages/devel/gn package/feeds/packages/gn 2>/dev/null || true
+
 
