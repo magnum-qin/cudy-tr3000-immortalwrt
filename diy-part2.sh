@@ -53,4 +53,8 @@ rm -rf feeds/packages/net/naiveproxy package/feeds/packages/naiveproxy 2>/dev/nu
 rm -rf feeds/packages/libs/libcronet package/feeds/packages/libcronet 2>/dev/null || true
 rm -rf feeds/packages/devel/gn package/feeds/packages/gn 2>/dev/null || true
 
+# 9. 修复 miniupnpd 2.3.11 与旧版过期补丁 020-descr-filter-fix 冲突导致的编译中断
+rm -f feeds/packages/net/miniupnpd/patches/020-descr-filter-fix.patch package/feeds/packages/miniupnpd/patches/020-descr-filter-fix.patch 2>/dev/null || true
+
+
 
