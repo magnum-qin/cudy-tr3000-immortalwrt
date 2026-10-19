@@ -1,0 +1,4 @@
+# Ignore router backups and binaries
+router_backup_*/
+*.bin
+*.tar.gz
